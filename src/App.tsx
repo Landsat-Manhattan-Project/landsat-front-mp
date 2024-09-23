@@ -1,8 +1,12 @@
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/login";
+
 function App() {
   return (
     <div className="App">
-      <h1>Manhattan Project</h1>
-      <p>Building...</p>
+      <Routes>
+        <Route index element={<LoginPage />} />
+      </Routes>
     </div>
   );
 }

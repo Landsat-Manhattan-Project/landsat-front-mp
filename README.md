@@ -27,18 +27,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
    ```sh
    cp .env.example .env
    ```
-2. Setup RSA keys for JWT auth
-
-   ```sh
-   openssl genrsa -out private.pem 2048
-   openssl rsa -in private.pem -pubout -out public.pem
-   ```
-
-3. Start the server:
+2. Start the server:
    ```sh
    yarn start
    ```
-4. Access the React project at `http://localhost:3000`.
+3. Access the React project at `http://localhost:3000`.
 
 ## Available Scripts
 

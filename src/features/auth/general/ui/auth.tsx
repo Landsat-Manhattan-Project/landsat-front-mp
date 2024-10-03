@@ -1,15 +1,15 @@
 import { Box, Container } from "@mui/material";
-import { ThreeCanvas } from "../ui/canvas";
-import { EarthPlanet } from "../planet/ui/earth_planet";
-import { Login } from "./login/ui";
-import { Register } from "./register/ui";
-import { LandsatButton } from "../ui/button";
-import { useAnimations } from "../planet/model/use_animations";
+import { ThreeCanvas } from "../../../ui/canvas";
+import { EarthPlanet } from "../../../planet/ui/earth_planet";
+import { Login } from "../../login/ui";
+import { Register } from "../../register/ui";
+import { LandsatButton } from "../../../ui/button";
+import { useAnimations } from "../../../planet/model/use_animations";
 import { useState } from "react";
 
-import "./index.css";
-import { useLogin } from "./login/model/use_login";
-import { useRegister } from "./register/model/use_register";
+import "./auth.css";
+import { useLogin } from "../../login/model/use_login";
+import { useRegister } from "../../register/model/use_register";
 
 const AuthTemplate = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(true);

@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useHandleErrors } from "../../../../utils/error";
+import { useRequest } from "../../../../utils/request";
+import { landsatToast } from "../../../../utils/toast";
+import { useAuthContext } from "../../general/model/auth.context";
+import { secret } from "../../../../utils/secret";
+import { saveDataLocal } from "../../../../utils/local_storage";
 
 interface UseLoginProps {
   formData: {
@@ -25,6 +31,11 @@ const useLogin = (
   toggleHideButtonModal: (newVal?: boolean) => void
 ) => {
   const navigate = useNavigate();
+  const { encryptData } = secret();
+  const { handleErrors } = useHandleErrors();
+  const { axiosInstance } = useRequest();
+
+  const { setAuthState } = useAuthContext();
 
   const [formValidate, setFormValidate] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,25 +56,45 @@ const useLogin = (
     }, 1000);
   };
 
+  const loginSucessfully = async (token: string) => {
+    landsatToast(`¡Bienvenido ${formData.email}!`, "success");
+    const result = {
+      email: formData.email,
+      token: token,
+    };
+
+    await zoomIn();
+    setAuthState(result);
+    const encryptedData = encryptData(JSON.stringify(result));
+    saveDataLocal("auth", encryptedData ?? "");
+    navigate("/home");
+  };
+
   const handleSubmit = async () => {
     if (formData.email === "" || formData.password === "") {
       setFormValidate(true);
       return;
     }
+
+    // Animation
     toggleModal();
     toggleHideButtonModal();
     await zoomOut();
 
-    try {
-      throw new TypeError("oops");
-      // await zoomIn();
-    } catch (error) {
-      setTimeout(async () => {
-        await resetZoomOut();
-        toggleHideButtonModal(false);
-        toggleModal(false);
-      }, 1000);
-    }
+    handleErrors(
+      async () => {
+        const result = await axiosInstance.post("/auth/login", formData);
+
+        await loginSucessfully(result.data.token);
+      },
+      async (e) => {
+        setTimeout(async () => {
+          await resetZoomOut();
+          toggleHideButtonModal(false);
+          toggleModal(false);
+        }, 1000);
+      }
+    );
   };
 
   return {

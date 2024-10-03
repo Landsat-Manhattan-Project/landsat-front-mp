@@ -1,0 +1,35 @@
+.title {
+  text-align: center;
+  margin: 10px 5px;
+  color: white;
+}
+
+p {
+  margin: 0;
+}
+
+.link {
+  color: white;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.link::before {
+  transition: 800ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  content: "\00a0";
+  width: 100%;
+  position: absolute;
+  left: -200px;
+  border-bottom: 1px solid white;
+  margin-top: 10px;
+}
+
+.link:hover::before {
+  left: 0px;
+}
+
+hr {
+  width: 100%;
+}

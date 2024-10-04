@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
     "@react-three/drei": "^9.113.0",
@@ -21,8 +22,11 @@
     "crypto-js": "^4.2.0",
     "cryptojs": "^2.5.3",
     "js-cookie": "^3.0.5",
+    "mapbox-gl": "^3.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-map-gl": "^7.1.7",
+    "react-mapbox-gl": "^5.1.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
@@ -56,6 +60,7 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
-    "@types/js-cookie": "^3.0.6"
+    "@types/js-cookie": "^3.0.6",
+    "@types/mapbox__mapbox-gl-geocoder": "^5.0.0"
   }
 }

@@ -15,22 +15,29 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {}
 
 type menuOption = {
   Name: string;
   Icon: ReactNode;
+  page: string;
 };
 
 const SideMenu = (props: Props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const options: menuOption[] = [
-    { Name: "Home", Icon: <HomeIcon /> },
-    { Name: "Saved Locations", Icon: <FmdGoodIcon /> },
-    { Name: "Events", Icon: <EventAvailableIcon /> },
-    { Name: "Settings", Icon: <SettingsIcon /> },
+    { Name: "Home", Icon: <HomeIcon />, page: "/home" },
+    {
+      Name: "Saved Locations",
+      Icon: <FmdGoodIcon />,
+      page: "/saved-locations",
+    },
+    { Name: "Events", Icon: <EventAvailableIcon />, page: "/events" },
+    { Name: "Settings", Icon: <SettingsIcon />, page: "/settings" },
   ];
 
   const toggleDrawer =
@@ -44,12 +51,19 @@ const SideMenu = (props: Props) => {
       setDrawerOpen(open);
     };
 
+  const navigateToPage = (page: string) => {
+    navigate(page);
+  };
+
   const OptionsList = () => {
     return (
       <List>
         {options.map((i: menuOption) => (
           <ListItem key={i.Name} disablePadding>
-            <ListItemButton sx={{ "&:hover": { backgroundColor: "#222" } }}>
+            <ListItemButton
+              sx={{ "&:hover": { backgroundColor: "#222" } }}
+              onClick={() => navigateToPage(i.page)}
+            >
               <ListItemIcon sx={{ color: "#fff" }}>{i.Icon}</ListItemIcon>
               <ListItemText primary={i.Name} />
             </ListItemButton>

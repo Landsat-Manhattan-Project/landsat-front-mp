@@ -6,24 +6,16 @@ import { useAuthContext } from "../../general/model/auth.context";
 import { landsatToast } from "../../../../utils/toast";
 import { secret } from "../../../../utils/secret";
 import { saveDataLocal } from "../../../../utils/local_storage";
+import { Auth } from "../../../../entities/auth";
+import { type IFormData } from "../../general/model/use_general_auth";
 
 interface UseRegisterProps {
-  formData: {
-    email: string;
-    password: string;
-  };
   formValidate: boolean;
-  setFormData: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      password: string;
-    }>
-  >;
   handleSubmit: () => Promise<void>;
-  loginWithoutSession: () => Promise<void>;
 }
 
 const useRegister = (
+  formData: IFormData,
   resetZoomOut: () => Promise<void>,
   zoomIn: () => Promise<void>,
   zoomOut: () => Promise<void>,
@@ -38,29 +30,13 @@ const useRegister = (
   const { setAuthState } = useAuthContext();
 
   const [formValidate, setFormValidate] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const loginWithoutSession = async () => {
-    toggleHideButtonModal();
-    toggleModal();
-
-    setTimeout(async () => {
-      await zoomOut();
-      setTimeout(async () => {
-        await zoomIn();
-        navigate("/home");
-      }, 2000);
-    }, 1000);
-  };
 
   const registerSucessfully = async (token: string) => {
     landsatToast(`¡Bienvenido ${formData.email}!`, "success");
-    const result = {
+    const result: Auth = {
       email: formData.email,
       token: token,
+      userRole: "user",
     };
 
     await zoomIn();
@@ -73,6 +49,7 @@ const useRegister = (
   const handleSubmit = async () => {
     if (formData.email === "" || formData.password === "") {
       setFormValidate(true);
+      landsatToast("Formulario incompleto.", "error");
       return;
     }
     toggleModal();
@@ -84,9 +61,10 @@ const useRegister = (
 
         await registerSucessfully(result.data.token);
       },
-      async (e) => {
+      async (e: any) => {
         setTimeout(async () => {
           await resetZoomOut();
+          landsatToast(e.error, "error");
           toggleHideButtonModal(false);
           toggleModal(false);
         }, 1000);
@@ -95,11 +73,8 @@ const useRegister = (
   };
 
   return {
-    formData,
     formValidate,
-    setFormData,
     handleSubmit,
-    loginWithoutSession,
   };
 };
 

@@ -10,6 +10,7 @@ import { useState } from "react";
 import "./auth.css";
 import { useLogin } from "../../login/model/use_login";
 import { useRegister } from "../../register/model/use_register";
+import { useGeneralAuth } from "../model/use_general_auth";
 
 const AuthTemplate = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(true);
@@ -32,7 +33,15 @@ const AuthTemplate = () => {
     setHideButtonModal(newValue ?? !hideModal);
   };
 
+  const { loginWithoutSession, formData, setFormData } = useGeneralAuth(
+    zoomInAnimation,
+    zoomOutAnimation,
+    toggleHideModal,
+    toggleHideButtonModal
+  );
+
   const useLoginComponents = useLogin(
+    formData,
     resetZoomOutAnimation,
     zoomInAnimation,
     zoomOutAnimation,
@@ -41,6 +50,7 @@ const AuthTemplate = () => {
   );
 
   const useRegisterComponents = useRegister(
+    formData,
     resetZoomOutAnimation,
     zoomInAnimation,
     zoomOutAnimation,
@@ -82,7 +92,7 @@ const AuthTemplate = () => {
         {!hideButtonModal && (
           <LandsatButton
             onClick={() => toggleHideModal()}
-            text={hideModal ? "Hide modal" : "Open modal"}
+            text={!hideModal ? "Hide modal" : "Open modal"}
             btnStyleVariant={"btn2"}
             sx={{
               zIndex: 5,
@@ -114,7 +124,14 @@ const AuthTemplate = () => {
               padding: 0,
             }}
           >
-            {isLoginOpen ? <Login useLogin={useLoginComponents} /> : null}
+            {isLoginOpen ? (
+              <Login
+                formData={formData}
+                setFormData={setFormData}
+                useLogin={useLoginComponents}
+                loginAsGuest={loginWithoutSession}
+              />
+            ) : null}
           </Box>
           <Box
             className="card-container"
@@ -130,7 +147,12 @@ const AuthTemplate = () => {
             }}
           >
             {!isLoginOpen ? (
-              <Register useRegister={useRegisterComponents} />
+              <Register
+                formData={formData}
+                setFormData={setFormData}
+                useRegister={useRegisterComponents}
+                loginAsGuest={loginWithoutSession}
+              />
             ) : null}
           </Box>
 

@@ -6,24 +6,16 @@ import { landsatToast } from "../../../../utils/toast";
 import { useAuthContext } from "../../general/model/auth.context";
 import { secret } from "../../../../utils/secret";
 import { saveDataLocal } from "../../../../utils/local_storage";
+import { Auth } from "../../../../entities/auth";
+import { type IFormData } from "../../general/model/use_general_auth";
 
 interface UseLoginProps {
-  formData: {
-    email: string;
-    password: string;
-  };
   formValidate: boolean;
-  setFormData: React.Dispatch<
-    React.SetStateAction<{
-      email: string;
-      password: string;
-    }>
-  >;
   handleSubmit: () => Promise<void>;
-  loginWithoutSession: () => Promise<void>;
 }
 
 const useLogin = (
+  formData: IFormData,
   resetZoomOut: () => Promise<void>,
   zoomIn: () => Promise<void>,
   zoomOut: () => Promise<void>,
@@ -38,29 +30,13 @@ const useLogin = (
   const { setAuthState } = useAuthContext();
 
   const [formValidate, setFormValidate] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const loginWithoutSession = async () => {
-    toggleHideButtonModal();
-    toggleModal();
-
-    setTimeout(async () => {
-      await zoomOut();
-      setTimeout(async () => {
-        await zoomIn();
-        navigate("/home");
-      }, 2000);
-    }, 1000);
-  };
 
   const loginSucessfully = async (token: string) => {
     landsatToast(`¡Bienvenido ${formData.email}!`, "success");
-    const result = {
+    const result: Auth = {
       email: formData.email,
       token: token,
+      userRole: "user",
     };
 
     await zoomIn();
@@ -73,6 +49,7 @@ const useLogin = (
   const handleSubmit = async () => {
     if (formData.email === "" || formData.password === "") {
       setFormValidate(true);
+
       return;
     }
 
@@ -90,6 +67,8 @@ const useLogin = (
       async (e) => {
         setTimeout(async () => {
           await resetZoomOut();
+          landsatToast("Email or password invalid", "error");
+
           toggleHideButtonModal(false);
           toggleModal(false);
         }, 1000);
@@ -98,11 +77,8 @@ const useLogin = (
   };
 
   return {
-    formData,
     formValidate,
-    setFormData,
     handleSubmit,
-    loginWithoutSession,
   };
 };
 

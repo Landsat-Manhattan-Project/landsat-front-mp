@@ -8,7 +8,7 @@ import {
 import { Auth } from "../../../../entities/auth";
 import { useNavigate } from "react-router-dom";
 import { landsatToast } from "../../../../utils/toast";
-import { removeCookie } from "../../../../utils/cookies";
+import { removeDataLocal } from "../../../../utils/local_storage";
 
 interface IAuth {
   authState: Auth | undefined;
@@ -27,10 +27,10 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const navigate = useNavigate();
 
   const logout = () => {
-    landsatToast("¡Hasta luego!", "success");
     setAuthState(undefined);
+    removeDataLocal("auth");
+    landsatToast("¡Hasta luego!", "success");
     navigate("/", { replace: true });
-    removeCookie("auth");
   };
 
   return (

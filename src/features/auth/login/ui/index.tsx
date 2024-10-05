@@ -1,5 +1,5 @@
 import { Mail } from "@mui/icons-material";
-import { Box, Checkbox, Container, FormControlLabel } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import PasswordIcon from "@mui/icons-material/Password";
 import "./index.css";
 import SendIcon from "@mui/icons-material/Send";
@@ -7,19 +7,17 @@ import { LandsatButton } from "../../../ui/button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { type UseLoginProps } from "../model/use_login";
 import { Input } from "../../../ui/input";
+import { type IFormData } from "../../general/model/use_general_auth";
 
 interface Props {
   useLogin: UseLoginProps;
+  loginAsGuest: () => Promise<void>;
+  formData: IFormData;
+  setFormData: React.Dispatch<React.SetStateAction<IFormData>>;
 }
 
-const Login = ({ useLogin }: Props) => {
-  const {
-    formData,
-    formValidate,
-    setFormData,
-    handleSubmit,
-    loginWithoutSession,
-  } = useLogin;
+const Login = ({ useLogin, loginAsGuest, formData, setFormData }: Props) => {
+  const { formValidate, handleSubmit } = useLogin;
 
   return (
     <Box
@@ -65,20 +63,6 @@ const Login = ({ useLogin }: Props) => {
           icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
           errorLabel={"Password is required"}
         />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "90%",
-          }}
-        >
-          <FormControlLabel
-            className="link"
-            control={<Checkbox defaultChecked />}
-            label="Remember me"
-          />
-        </Box>
         <LandsatButton
           text="Sign in"
           onClick={handleSubmit}
@@ -92,7 +76,7 @@ const Login = ({ useLogin }: Props) => {
         sx={{ display: "grid", alignContent: "center" }}
       >
         <LandsatButton
-          onClick={loginWithoutSession}
+          onClick={loginAsGuest}
           text="Login without session"
           isStartIcon
           btnStyleVariant={"btn2"}

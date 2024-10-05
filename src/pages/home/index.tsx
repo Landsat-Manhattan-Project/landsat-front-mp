@@ -7,9 +7,9 @@ const HomePage = () => {
 
   return (
     <>
-      {/* <h1>Home</h1> */}
-      {/* <LandsatButton onClick={logout} text={"Logout"} /> */}
-      <Map />
+      <h1>Home</h1>
+      <LandsatButton onClick={logout} text={"Logout"} />
+      {/* <Map /> */}
     </>
   );
 };

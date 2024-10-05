@@ -1,11 +1,11 @@
-import AddLocationButton from "../../features/ui/addLocationButton";
+import AddLocation from "../../features/ui/addLocation";
 import { Header } from "../../features/ui/header";
 
 const HomePage = () => {
   return (
     <>
       <Header />
-      <AddLocationButton />
+      <AddLocation />
       <h1>Home</h1>
     </>
   );

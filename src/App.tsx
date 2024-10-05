@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { secret } from "./utils/secret";
 import { getDataLocal } from "./utils/local_storage";
+import Layout from "./features/ui/layout";
+import EventsPage from "./pages/events";
 
 function App() {
   const { authState, setAuthState } = useAuthContext();
@@ -43,7 +45,8 @@ function App() {
           <Route index element={<AuthPage />} />
         </Route>
         <Route element={<ProtectedRoutes />}>
-          <Route path="home" element={<HomePage />} />
+          <Route path="home" element={Layout(HomePage)} />
+          <Route path="events" element={Layout(EventsPage)} />{" "}
         </Route>
       </Routes>
       <ToastContainer />

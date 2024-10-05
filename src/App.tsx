@@ -10,6 +10,7 @@ import { secret } from "./utils/secret";
 import { getDataLocal } from "./utils/local_storage";
 import Layout from "./features/ui/layout";
 import EventsPage from "./pages/events";
+import ChatPage from "./pages/chat";
 
 function App() {
   const { authState, setAuthState } = useAuthContext();
@@ -46,7 +47,8 @@ function App() {
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="home" element={Layout(HomePage)} />
-          <Route path="events" element={Layout(EventsPage)} />{" "}
+          <Route path="events" element={Layout(EventsPage)} />
+          <Route path="events/:id" element={Layout(ChatPage)} />
         </Route>
       </Routes>
       <ToastContainer />

@@ -91,7 +91,7 @@ const EventsPage = (props: Props) => {
   return (
     <Box
       sx={{
-        width: "calc(430px * 4)",
+        width: "calc(380px * 4 + 50px * 3)",
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "start",

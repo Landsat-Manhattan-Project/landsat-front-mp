@@ -40,7 +40,7 @@ const EventCard = ({
     <Card
       sx={{
         display: "flex",
-        maxWidth: "430px",
+        width: "380px",
       }}
     >
       <CardActionArea

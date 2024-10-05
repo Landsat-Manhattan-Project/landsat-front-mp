@@ -69,6 +69,18 @@ const Register = ({
           icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
           errorLabel={"Password is required"}
         />
+        <Input
+          value={formData.appPurpose}
+          onChange={(e) =>
+            setFormData({ ...formData, appPurpose: e.target.value })
+          }
+          error={formValidate && formData.password === ""}
+          isRequired
+          label={"What is your purpose?"}
+          type={"text"}
+          icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
+          errorLabel={"The purpose is required."}
+        />
         <LandsatButton
           text={"Sign up"}
           onClick={handleSubmit}

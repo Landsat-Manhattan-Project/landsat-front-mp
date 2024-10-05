@@ -37,6 +37,7 @@ const useRegister = (
       email: formData.email,
       token: token,
       userRole: "user",
+      purpose: formData.appPurpose,
     };
 
     await zoomIn();

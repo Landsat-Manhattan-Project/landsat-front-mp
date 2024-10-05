@@ -3,4 +3,5 @@ export interface Auth {
   password?: string;
   token?: string;
   userRole: "user" | "guest";
+  purpose?: string;
 }

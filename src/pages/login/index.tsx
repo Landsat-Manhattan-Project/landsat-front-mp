@@ -1,11 +1,9 @@
-import { Login } from "../../features/auth/login";
+import AuthPage from "../auth";
 
 const LoginPage = () => {
   return (
     <>
-      <h1>Manhattan Project</h1>
-      <p>Building...</p>
-      <Login />
+      <AuthPage />
     </>
   );
 };

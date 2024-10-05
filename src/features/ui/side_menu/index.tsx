@@ -16,6 +16,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Logout } from "@mui/icons-material";
+import { useAuthContext } from "../../auth/general/model/auth.context";
 
 interface Props {}
 
@@ -28,6 +30,7 @@ type menuOption = {
 const SideMenu = (props: Props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuthContext();
 
   const options: menuOption[] = [
     { Name: "Home", Icon: <HomeIcon />, page: "/home" },
@@ -94,7 +97,7 @@ const SideMenu = (props: Props) => {
         }}
       >
         <Box
-          sx={{ width: 250 }}
+          sx={{ width: 250, height: "inherit" }}
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
@@ -120,6 +123,17 @@ const SideMenu = (props: Props) => {
           </Box>
           <OptionsList />
         </Box>
+        <ListItem disablePadding>
+          <ListItemButton
+            sx={{ padding: "1rem", "&:hover": { backgroundColor: "#222" } }}
+            onClick={logout}
+          >
+            <ListItemIcon sx={{ color: "#fff" }}>
+              <Logout />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItemButton>
+        </ListItem>
       </Drawer>
     </Box>
   );

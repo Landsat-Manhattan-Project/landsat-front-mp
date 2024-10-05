@@ -1,7 +1,7 @@
 import { AppBar, Box, ThemeProvider, Toolbar, Typography } from "@mui/material";
 import { theme } from "../theme";
 import { Link } from "react-router-dom";
-import SideMenu from "../sideMenu";
+import SideMenu from "../side_menu";
 
 type Props = {};
 

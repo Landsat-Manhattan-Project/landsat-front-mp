@@ -7,6 +7,7 @@ import { useState } from "react";
 export interface IFormData {
   email: string;
   password: string;
+  appPurpose: string;
 }
 
 interface UseGeneralAuthProps {
@@ -28,6 +29,7 @@ const useGeneralAuth = (
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    appPurpose: "",
   });
 
   const loginWithoutSession = async () => {

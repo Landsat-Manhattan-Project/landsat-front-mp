@@ -91,12 +91,13 @@ const EventsPage = (props: Props) => {
   return (
     <Box
       sx={{
-        width: "calc(380px * 4 + 50px * 3)",
+        maxWidth: "calc(380px * 4 + 50px * 3)",
         display: "flex",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "start",
         flexWrap: "wrap",
         paddingTop: "30px",
+        paddingBottom: "30px",
         margin: "0 auto",
         columnGap: "50px",
         rowGap: "20px",

@@ -32,7 +32,7 @@ const useLogin = (
   const [formValidate, setFormValidate] = useState(false);
 
   const loginSucessfully = async (token: string) => {
-    landsatToast(`¡Bienvenido ${formData.email}!`, "success");
+    landsatToast(`¡Welcome ${formData.email}!`, "success");
     const result: Auth = {
       email: formData.email,
       token: token,

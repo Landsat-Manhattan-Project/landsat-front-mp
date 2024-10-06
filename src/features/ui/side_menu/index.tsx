@@ -32,12 +32,14 @@ const SideMenu = (props: Props) => {
   const navigate = useNavigate();
   const { logout } = useAuthContext();
 
+  const routesBlockForGuest = ["/saved-places"];
+
   const options: menuOption[] = [
     { Name: "Home", Icon: <HomeIcon />, page: "/home" },
     {
-      Name: "Saved Locations",
+      Name: "Saved places",
       Icon: <FmdGoodIcon />,
-      page: "/saved-locations",
+      page: "/saved-places",
     },
     { Name: "Scenes", Icon: <EventAvailableIcon />, page: "/scenes" },
   ];
@@ -60,17 +62,19 @@ const SideMenu = (props: Props) => {
   const OptionsList = () => {
     return (
       <List>
-        {options.map((i: menuOption) => (
-          <ListItem key={i.Name} disablePadding>
-            <ListItemButton
-              sx={{ "&:hover": { backgroundColor: "#222" } }}
-              onClick={() => navigateToPage(i.page)}
-            >
-              <ListItemIcon sx={{ color: "#fff" }}>{i.Icon}</ListItemIcon>
-              <ListItemText primary={i.Name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {options
+          .filter((el) => !routesBlockForGuest.includes(el.page))
+          .map((i: menuOption) => (
+            <ListItem key={i.Name} disablePadding>
+              <ListItemButton
+                sx={{ "&:hover": { backgroundColor: "#222" } }}
+                onClick={() => navigateToPage(i.page)}
+              >
+                <ListItemIcon sx={{ color: "#fff" }}>{i.Icon}</ListItemIcon>
+                <ListItemText primary={i.Name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
     );
   };

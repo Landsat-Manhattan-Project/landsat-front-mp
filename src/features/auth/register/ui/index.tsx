@@ -1,5 +1,5 @@
 import { Mail } from "@mui/icons-material";
-import { Box, Container } from "@mui/material";
+import { Box, Container, MenuItem, TextField } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PasswordIcon from "@mui/icons-material/Password";
 import "./index.css";
@@ -69,18 +69,27 @@ const Register = ({
           icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
           errorLabel={"Password is required"}
         />
-        <Input
+        <TextField
+          sx={{ width: "90%", color: "black", mt: 1 }}
+          id="select"
+          label="What is your purpose?"
           value={formData.appPurpose}
+          select
+          error={formValidate && formData.password === ""}
+          required
           onChange={(e) =>
             setFormData({ ...formData, appPurpose: e.target.value })
           }
-          error={formValidate && formData.password === ""}
-          isRequired
-          label={"What is your purpose?"}
-          type={"text"}
-          icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
-          errorLabel={"The purpose is required."}
-        />
+        >
+          <MenuItem sx={{ color: "white" }} value="citizen">
+            Citizen
+          </MenuItem>
+          <MenuItem value="farmer">Farmer</MenuItem>
+          <MenuItem value="college_student">College student</MenuItem>
+          <MenuItem value="engineer">Engineer</MenuItem>
+          <MenuItem value="biologist">Biologist</MenuItem>
+          <MenuItem value="geologist">Geologist</MenuItem>
+        </TextField>
         <LandsatButton
           text={"Sign up"}
           onClick={handleSubmit}

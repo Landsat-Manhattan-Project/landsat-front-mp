@@ -1,6 +1,4 @@
-import { Map } from "../../features/map";
-
-import { Header } from "../../features/ui/header";
+import { Map } from "../../features/map/ui";
 
 const HomePage = () => {
   return (

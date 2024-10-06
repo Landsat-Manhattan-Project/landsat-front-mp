@@ -14,7 +14,7 @@ type Props = Place;
 const PlaceCard = ({ id, name, latitude, longitude, notify }: Props) => {
   const navigate = useNavigate();
 
-  const redirectToChat = () => {
+  const redirectToHome = () => {
     navigate("/home", {
       state: {
         id,
@@ -34,7 +34,7 @@ const PlaceCard = ({ id, name, latitude, longitude, notify }: Props) => {
       }}
     >
       <CardActionArea
-        onClick={redirectToChat}
+        onClick={redirectToHome}
         sx={{
           display: "flex",
           justifyContent: "flex-start",

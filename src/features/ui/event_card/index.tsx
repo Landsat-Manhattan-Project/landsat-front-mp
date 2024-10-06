@@ -56,6 +56,21 @@ const EventCard = ({
     return dateList;
   };
 
+  const [value, setValue] = useState("");
+
+  const handleChange = (event: { target: { value: any } }) => {
+    const newValue = event.target.value;
+    console.log(typeof newValue);
+    if (newValue > 100) {
+      setValue(newValue.slice(0, 2));
+      return;
+    } else if (newValue < 0) {
+      setValue(newValue.slice(0));
+      return;
+    }
+
+    setValue(newValue);
+  };
   const redirectToChat = () => {
     navigate(`${id}`);
   };
@@ -111,6 +126,8 @@ const EventCard = ({
                 max={100}
                 onClick={(event) => event.stopPropagation()}
                 style={{ width: "100%" }}
+                value={parseInt(value)}
+                onChange={handleChange}
               ></input>
             </Box>
           </Box>

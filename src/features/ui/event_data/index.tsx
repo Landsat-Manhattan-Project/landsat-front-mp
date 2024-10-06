@@ -69,10 +69,13 @@ const EventData = (props: Props) => {
       sx={{
         width: "35%",
         height: "calc(100vh - 64px)",
-        backgroundColor: "#232323",
+        backgroundColor: "#000",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        "@media (max-width: 900px)": {
+          width: "100%",
+        },
       }}
     >
       <Box

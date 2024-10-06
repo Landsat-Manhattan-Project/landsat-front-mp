@@ -21,6 +21,7 @@
     "axios": "^1.7.7",
     "crypto-js": "^4.2.0",
     "cryptojs": "^2.5.3",
+    "date-fns": "^4.1.0",
     "js-cookie": "^3.0.5",
     "maki": "^2.1.0",
     "mapbox-gl": "^3.7.0",

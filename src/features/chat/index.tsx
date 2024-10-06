@@ -1,6 +1,7 @@
 import { Box, Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { theme } from "../ui/theme";
 
 type Props = {};
 
@@ -9,142 +10,136 @@ const Chat = (props: Props) => {
 
   const messagesList = [
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
     },
     {
-      id: 1,
+      id: "id1",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "user",
     },
     {
-      id: 1,
+      id: "id3123122",
       message:
         "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
       type: "chat",
-    },
-    {
-      id: 1,
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
     },
   ];
 
@@ -187,9 +182,10 @@ const Chat = (props: Props) => {
     );
   };
 
-  const MessageCard = ({ message, type }: any) => {
+  const MessageCard = ({ id, message, type }: any) => {
     return (
       <Box
+        id={id}
         sx={{
           width: "100%",
           display: "flex",
@@ -200,8 +196,8 @@ const Chat = (props: Props) => {
         <Box
           sx={{
             width: "60%",
-            backgroundColor: type === "user" ? "#b8b8b8" : "white",
-            color: "#000",
+            backgroundColor: type === "user" ? "#000" : "#fff",
+            color: type === "user" ? "#fff" : "#000",
             padding: "10px",
             borderRadius: "10px",
           }}
@@ -227,11 +223,17 @@ const Chat = (props: Props) => {
         }}
       >
         {messagesList.map((i) => (
-          <MessageCard message={i.message} type={i.type} />
+          <MessageCard id={i.id} message={i.message} type={i.type} />
         ))}
       </Box>
     );
   };
+
+  useEffect(() => {
+    document
+      .querySelector(`#${messagesList[messagesList.length - 1].id}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, []);
 
   return (
     <Box
@@ -246,6 +248,9 @@ const Chat = (props: Props) => {
         paddingBottom: "40px",
         boxSizing: "border-box",
         position: "relative",
+        "@media (max-width: 900px)": {
+          width: "100%",
+        },
       }}
     >
       <Messages />

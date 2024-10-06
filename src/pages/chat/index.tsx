@@ -7,7 +7,14 @@ type Props = {};
 
 const ChatPage = (props: Props) => {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        "@media (max-width: 900px)": {
+          flexDirection: "column-reverse",
+        },
+      }}
+    >
       <EventData />
       <Chat />
     </Box>

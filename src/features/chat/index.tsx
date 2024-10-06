@@ -1,150 +1,30 @@
 import { Box, Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { theme } from "../ui/theme";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import Markdown from "react-markdown";
+import "./style.css";
 
 type Props = {};
 
 const Chat = (props: Props) => {
+  const baseUrl = `${process.env.REACT_APP_PYTHON_API}/evaluate-data`;
+
   const request = useRef<any>("");
+  const { search } = useLocation();
+  const [messages, setMessages] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const messagesList = [
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-    {
-      id: "id1",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "user",
-    },
-    {
-      id: "id3123122",
-      message:
-        "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ",
-      type: "chat",
-    },
-  ];
+  const queryParams = new URLSearchParams(search);
 
-  const handleSubmit = (e: any) => {
-    console.log("Sent data:", request.current.value);
+  const latitude = queryParams.get("latitude");
+  const longitude = queryParams.get("longitude");
+
+  const handleSubmit = async (e: any) => {
+    addMessage("user", request.current.value);
+    await evaluateData();
     request.current.value = "";
   };
 
@@ -202,13 +82,16 @@ const Chat = (props: Props) => {
             borderRadius: "10px",
           }}
         >
-          {message}
+          <Markdown>{message}</Markdown>
         </Box>
       </Box>
     );
   };
 
   const Messages = () => {
+    if (messages.length === 0) {
+      return null;
+    }
     return (
       <Box
         sx={{
@@ -222,18 +105,53 @@ const Chat = (props: Props) => {
           paddingBottom: "100px",
         }}
       >
-        {messagesList.map((i) => (
-          <MessageCard id={i.id} message={i.message} type={i.type} />
+        {messages.map((i: any) => (
+          <MessageCard message={i.message} type={i.type} />
         ))}
+        {isLoading ? (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              paddingY: "40px",
+            }}
+          >
+            <LoadingBox />
+          </Box>
+        ) : null}
       </Box>
     );
   };
 
-  useEffect(() => {
-    document
-      .querySelector(`#${messagesList[messagesList.length - 1].id}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, []);
+  const addMessage = (type: string, message: string) => {
+    const newMessage = {
+      message,
+      type,
+    };
+    console.log(messages);
+    setMessages((prevMessages: any) => [...prevMessages, newMessage]);
+  };
+
+  const evaluateData = async () => {
+    try {
+      setIsLoading(true);
+      const { data }: any = await axios.post(baseUrl, {
+        latitude,
+        longitude,
+        context: request.current.value,
+        role: "farmer",
+      });
+      addMessage("chat", data["user_friendly_response"]);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const LoadingBox = () => {
+    return <span className="loader"></span>;
+  };
 
   return (
     <Box

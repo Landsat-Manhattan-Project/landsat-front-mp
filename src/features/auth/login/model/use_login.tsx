@@ -36,7 +36,7 @@ const useLogin = (
     const result: Auth = {
       email: formData.email,
       token: token,
-      userRole: "user",
+      role: "user",
     };
 
     await zoomIn();

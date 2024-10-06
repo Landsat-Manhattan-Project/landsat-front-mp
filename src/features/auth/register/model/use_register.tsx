@@ -36,7 +36,7 @@ const useRegister = (
     const result: Auth = {
       email: formData.email,
       token: token,
-      userRole: "user",
+      role: "user",
       purpose: formData.appPurpose,
     };
 

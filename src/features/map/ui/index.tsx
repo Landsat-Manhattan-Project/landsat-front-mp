@@ -32,19 +32,6 @@ import { useAuthContext } from "../../auth/general/model/auth.context";
 const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN ?? "";
 
 const Map = () => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "#000000",
-    color: "white",
-    border: "2px solid white",
-    boxShadow: 24,
-    borderRadius: 2,
-    p: 4,
-  };
   const mapRef = useRef<MP>(null!);
   const mapContainerRef = useRef<HTMLDivElement>(null!);
 
@@ -80,10 +67,12 @@ const Map = () => {
     formData,
     isFormFailed,
     newPlaceSaved,
+    placeMetadata,
     setNewPlaceSaved,
     setFormData,
+    getMetadata,
     savePlace,
-  } = UseMap(handleModalClose);
+  } = UseMap(handleModalClose, () => setIsFormOpen(false));
 
   useEffect(() => {
     mapboxgl.accessToken = TOKEN;
@@ -96,6 +85,8 @@ const Map = () => {
     mapRef.current.on("click", (e: MapMouseEvent) => {
       e.preventDefault();
       const { lat, lng } = e.lngLat;
+
+      getMetadata(lat, lng);
 
       handleModalOpen(lat, lng);
     });
@@ -171,6 +162,8 @@ const Map = () => {
 
         el.addEventListener("click", (e) => {
           const [lng, lat] = marker.geometry.coordinates;
+
+          getMetadata(lat, lng);
 
           handleModalOpen(lat, lng, marker.properties.name);
           e.stopPropagation();
@@ -265,7 +258,25 @@ const Map = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "#000000",
+            color: "white",
+            border: "2px solid white",
+            boxShadow: 24,
+            borderRadius: 2,
+            maxHeight: "80%",
+            overflowY: "auto",
+            overflowX: "hidden",
+            p: 4,
+            pr: 5,
+          }}
+        >
           <Box
             sx={{
               width: "100%",
@@ -308,11 +319,187 @@ const Map = () => {
               {coordinatesInfo.name}
             </Typography>
           )}
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Cloud coverage:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.cloud_coverage}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Cloud Mask:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.cloud_mask}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Distance KM:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.distance_km}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Ground sampling distance:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.ground_sampling_distance}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Image quality:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.image_quality}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Orbit number:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.orbit_number}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Processing level:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.processing_level}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Projection:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.projection}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Satellite:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.satellite}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Sensor type:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.sensor_type}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+            <Typography
+              id="modal-modal-description"
+              sx={{ fontWeight: "bold" }}
+            >
+              Scene ID:
+            </Typography>
+            <Typography id="modal-modal-description">
+              {placeMetadata?.scene_id}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Sun azimuth:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.sun_azimuth}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                Sun elevation:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.sun_elevation}
+              </Typography>
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                WRS path:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.wrs_path}
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
+              <Typography
+                id="modal-modal-description"
+                sx={{ fontWeight: "bold" }}
+              >
+                WRS row:
+              </Typography>
+              <Typography id="modal-modal-description">
+                {placeMetadata?.wrs_row}
+              </Typography>
+            </Box>
+          </Box>
 
-          {authState?.userRole === "user" && (
+          {authState?.role === "user" && (
             <>
               {(coordinatesInfo?.name === null ||
                 coordinatesInfo?.name === undefined) && (

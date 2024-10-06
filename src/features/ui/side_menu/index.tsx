@@ -30,7 +30,7 @@ type menuOption = {
 const SideMenu = (props: Props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
-  const { logout } = useAuthContext();
+  const { authState, logout } = useAuthContext();
 
   const routesBlockForGuest = ["/saved-places"];
 
@@ -63,7 +63,17 @@ const SideMenu = (props: Props) => {
     return (
       <List>
         {options
-          .filter((el) => !routesBlockForGuest.includes(el.page))
+          .filter((el) => {
+            console.log(authState?.role);
+            console.log(
+              authState?.role === "guest" &&
+                routesBlockForGuest.includes(el.page)
+            );
+            return !(
+              authState?.role === "guest" &&
+              routesBlockForGuest.includes(el.page)
+            );
+          })
           .map((i: menuOption) => (
             <ListItem key={i.Name} disablePadding>
               <ListItemButton

@@ -57,7 +57,7 @@ const EventCard = ({
   };
 
   const redirectToChat = () => {
-    navigate(`${id}`);
+    navigate(`chat?latitude=${lat}&longitude=${long}`);
   };
 
   return (

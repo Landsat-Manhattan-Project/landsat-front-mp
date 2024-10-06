@@ -1,68 +1,137 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import axios from "axios";
 import { prettyPrintJson } from "pretty-print-json";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import DownloadIcon from "@mui/icons-material/Download";
+import "./style.css";
 
 type Props = {};
 
 const EventData = (props: Props) => {
-  const jsonData = {
-    satellite: "Landsat 8",
-    acquisition_date: "2024-10-05T12:30:00Z",
-    cloud_coverage: 5.2,
-    location: {
-      latitude: 40.7128,
-      longitude: -74.006,
+  const baseUrl = `${process.env.REACT_APP_PYTHON_API}/metadata`;
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+
+  const latitude = queryParams.get("latitude");
+  const longitude = queryParams.get("longitude");
+
+  const [jsonData, setJsonData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const images = [
+    {
+      thumbnail: "https://picsum.photos/id/1018/250/150/",
     },
-    bands: {
-      band_1: {
-        name: "Ultra Blue",
-        wavelength: "0.43 - 0.45 µm",
-        data_quality: "high",
-        data: [123, 145, 130, 120, 115],
-      },
-      band_2: {
-        name: "Blue",
-        wavelength: "0.45 - 0.51 µm",
-        data_quality: "high",
-        data: [156, 160, 155, 150, 148],
-      },
-      band_3: {
-        name: "Green",
-        wavelength: "0.53 - 0.59 µm",
-        data_quality: "high",
-        data: [200, 205, 198, 190, 185],
-      },
-      band_4: {
-        name: "Red",
-        wavelength: "0.64 - 0.67 µm",
-        data_quality: "medium",
-        data: [225, 230, 220, 215, 210],
-      },
-      band_5: {
-        name: "Near Infrared (NIR)",
-        wavelength: "0.85 - 0.88 µm",
-        data_quality: "high",
-        data: [300, 310, 305, 290, 285],
-      },
-      band_6: {
-        name: "Shortwave Infrared (SWIR) 1",
-        wavelength: "1.57 - 1.65 µm",
-        data_quality: "medium",
-        data: [150, 155, 160, 145, 140],
-      },
-      band_7: {
-        name: "Shortwave Infrared (SWIR) 2",
-        wavelength: "2.11 - 2.29 µm",
-        data_quality: "high",
-        data: [80, 85, 82, 78, 75],
-      },
+    {
+      thumbnail: "https://picsum.photos/id/1015/250/150/",
     },
-    metadata: {
-      image_quality: "clear",
-      sensor_type: "OLI/TIRS",
-      processing_level: "L1TP",
-      scene_id: "LC08_L1TP_012034_20241005_20241005_01_RT",
+    {
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
     },
+    {
+      thumbnail: "https://picsum.photos/id/1018/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1015/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1018/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1015/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1018/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1015/250/150/",
+    },
+    {
+      thumbnail: "https://picsum.photos/id/1019/250/150/",
+    },
+  ];
+
+  const getMetadata = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get(
+        `${baseUrl}?latitude=${latitude}&longitude=${longitude}`
+      );
+      setJsonData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const SceneImages = () => {
+    return (
+      <Box
+        sx={{
+          width: "80%",
+          minHeight: "200px",
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: " 20px",
+          marginY: "40px",
+        }}
+      >
+        {images.map((i) => (
+          <img src={i.thumbnail} style={{ width: "50px", height: "50px" }} />
+        ))}
+      </Box>
+    );
+  };
+
+  const handleDownload = () => {
+    // Crear un archivo ficticio Blob
+    const fileContents = "Este es un archivo de prueba ficticio";
+    const blob = new Blob([fileContents], { type: "application/zip" });
+
+    // Crear una URL para el archivo Blob
+    const url = URL.createObjectURL(blob);
+
+    // Crear un enlace <a> para descargar el archivo
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Report.zip"); // Nombre del archivo
+
+    // Simular un clic en el enlace para descargar
+    document.body.appendChild(link);
+    link.click();
+  };
+
+  useEffect(() => {
+    getMetadata();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          width: "35%",
+          height: "calc(100vh - 64px)",
+          backgroundColor: "#000",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          "@media (max-width: 900px)": {
+            width: "100%",
+          },
+        }}
+      >
+        <span className="loader"></span>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -73,6 +142,8 @@ const EventData = (props: Props) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "column",
+        overflowY: "scroll",
         "@media (max-width: 900px)": {
           width: "100%",
         },
@@ -80,16 +151,17 @@ const EventData = (props: Props) => {
     >
       <Box
         sx={{
-          height: "calc(100vh - 150px)",
+          minHeight: "700px",
           backgroundColor: "#fdfdfd",
           overflow: "scroll",
-          padding: "10px",
           boxSizing: "border-box",
           display: "flex",
-          justifyContent: "flex-start",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <div
+          style={{ marginTop: "30px" }}
           dangerouslySetInnerHTML={{
             __html: prettyPrintJson.toHtml(jsonData, {
               lineNumbers: true,
@@ -97,6 +169,21 @@ const EventData = (props: Props) => {
           }}
         />
       </Box>
+      <SceneImages />
+      <Button
+        variant="contained"
+        onClick={handleDownload}
+        sx={{
+          backgroundColor: "white",
+          color: "black",
+          borderRadius: "20px",
+          marginY: "20px",
+          gap: "10px",
+        }}
+      >
+        <DownloadIcon sx={{ color: "#000" }} />
+        Download
+      </Button>
     </Box>
   );
 };

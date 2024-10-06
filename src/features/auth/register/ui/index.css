@@ -34,6 +34,10 @@ hr {
   width: 100%;
 }
 
+.MuiPaper-root {
+  background-color: #000 !important;
+}
+
 .MuiFormLabel-root,
 .MuiInputLabel-root {
   color: rgb(255 251 251 / 40%) !important;

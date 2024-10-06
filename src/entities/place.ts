@@ -5,4 +5,6 @@ export interface Place {
   longitude: number;
   icon?: string;
   notify: boolean;
+  startNotificationTime?: Date;
+  endNotificationTime?: Date;
 }

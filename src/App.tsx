@@ -11,6 +11,7 @@ import { getDataLocal } from "./utils/local_storage";
 import Layout from "./features/ui/layout";
 import EventsPage from "./pages/events";
 import ChatPage from "./pages/chat";
+import PlacePage from "./pages/places";
 
 function App() {
   const { authState, setAuthState } = useAuthContext();
@@ -49,6 +50,7 @@ function App() {
           <Route path="home" element={Layout(HomePage)} />
           <Route path="events" element={Layout(EventsPage)} />
           <Route path="events/:id" element={Layout(ChatPage)} />
+          <Route path="saved-places" element={Layout(PlacePage)} />
         </Route>
       </Routes>
       <ToastContainer />

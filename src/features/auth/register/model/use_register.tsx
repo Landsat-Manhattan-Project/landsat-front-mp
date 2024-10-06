@@ -32,7 +32,7 @@ const useRegister = (
   const [formValidate, setFormValidate] = useState(false);
 
   const registerSucessfully = async (token: string) => {
-    landsatToast(`¡Bienvenido ${formData.email}!`, "success");
+    landsatToast(`¡Welcome ${formData.email}!`, "success");
     const result: Auth = {
       email: formData.email,
       token: token,
@@ -50,7 +50,7 @@ const useRegister = (
   const handleSubmit = async () => {
     if (formData.email === "" || formData.password === "") {
       setFormValidate(true);
-      landsatToast("Formulario incompleto.", "error");
+      landsatToast("Incomplete form.", "error");
       return;
     }
     toggleModal();
@@ -58,7 +58,10 @@ const useRegister = (
 
     handleErrors(
       async () => {
-        const result = await axiosInstance.post("/auth/signup", formData);
+        const result = await axiosInstance.post("/auth/signup", {
+          ...formData,
+          purpose: formData.appPurpose,
+        });
 
         await registerSucessfully(result.data.token);
       },
@@ -66,6 +69,7 @@ const useRegister = (
         setTimeout(async () => {
           await resetZoomOut();
           landsatToast(e.error, "error");
+
           toggleHideButtonModal(false);
           toggleModal(false);
         }, 1000);

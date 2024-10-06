@@ -66,7 +66,7 @@ const Login = ({ useLogin, loginAsGuest, formData, setFormData }: Props) => {
         <LandsatButton
           text="Sign in"
           onClick={handleSubmit}
-          icon={<SendIcon />}
+          icon={<SendIcon sx={{ color: "black" }} />}
           isStartIcon={false}
         />
       </Box>

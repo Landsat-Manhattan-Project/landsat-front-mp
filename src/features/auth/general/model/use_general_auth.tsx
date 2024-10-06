@@ -41,12 +41,10 @@ const useGeneralAuth = (
       setTimeout(async () => {
         await zoomIn();
         setAuthState({
-          userRole: "guest",
+          role: "guest",
         });
 
-        const encryptedData = encryptData(
-          JSON.stringify({ userRole: "guest" })
-        );
+        const encryptedData = encryptData(JSON.stringify({ role: "guest" }));
         saveDataLocal("auth", encryptedData ?? "");
         navigate("/home");
       }, 2000);

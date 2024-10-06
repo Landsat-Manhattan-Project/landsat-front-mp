@@ -93,7 +93,7 @@ const Register = ({
         <LandsatButton
           text={"Sign up"}
           onClick={handleSubmit}
-          icon={<SendIcon />}
+          icon={<SendIcon sx={{ color: "black" }} />}
           isStartIcon={false}
         />
       </Box>

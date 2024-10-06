@@ -58,9 +58,6 @@ const PlaceCard = ({ id, name, latitude, longitude, notify }: Props) => {
             </Typography>
             <Typography variant="body1">Latitude: {latitude}</Typography>
             <Typography variant="body1">Longitude: {longitude}</Typography>
-            <Typography variant="body1">
-              Notify me: {notify ? "✅" : "❎"}
-            </Typography>
           </Box>
         </CardContent>
       </CardActionArea>

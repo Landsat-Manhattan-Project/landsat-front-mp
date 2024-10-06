@@ -2,6 +2,6 @@ export interface Auth {
   email?: string;
   password?: string;
   token?: string;
-  userRole: "user" | "guest";
+  role: "user" | "guest";
   purpose?: string;
 }

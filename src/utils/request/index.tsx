@@ -3,6 +3,7 @@ import { useAuthContext } from "../../features/auth/general/model/auth.context";
 
 const useRequest = () => {
   const baseUrl = process.env.REACT_APP_API;
+  const baseDataUrl = process.env.REACT_APP_DATA_API;
 
   const { authState } = useAuthContext();
 
@@ -23,9 +24,16 @@ const useRequest = () => {
     });
   };
 
-  const axiosInstance = configAxiosInstance();
+  const configDataAxiosInstance = (): AxiosInstance => {
+    return axios.create({
+      baseURL: baseDataUrl,
+    });
+  };
 
-  return { axiosInstance };
+  const axiosInstance = configAxiosInstance();
+  const axiosDataApiInstance = configDataAxiosInstance();
+
+  return { axiosInstance, axiosDataApiInstance };
 };
 
 export { useRequest };

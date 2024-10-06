@@ -5,3 +5,25 @@
 .css-gi59xn-MuiMultiSectionDigitalClock-root {
   color: black;
 }
+
+/* Personalizar el contenedor del scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar vertical */
+  height: 8px; /* Altura del scrollbar horizontal */
+}
+
+/* Personalizar el fondo del scrollbar */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Personalizar el "dedo" del scrollbar */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 6px;
+}
+
+/* Cambiar el color del "dedo" del scrollbar cuando se pasa el mouse por encima */
+::-webkit-scrollbar-thumb:hover {
+  background: #b0aeae;
+}

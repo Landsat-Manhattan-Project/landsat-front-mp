@@ -22,9 +22,13 @@ function App() {
 
     if (auth) {
       const result = decryptData(auth);
-      if (result) setAuthState(JSON.parse(result));
+      if (result) {
+        const finalResult = JSON.parse(JSON.parse(result));
+        setAuthState(finalResult);
+      }
     }
-  }, [decryptData, setAuthState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ProtectedRoutes = () => {
     if (!authState) {

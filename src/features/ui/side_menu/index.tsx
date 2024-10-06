@@ -41,8 +41,7 @@ const SideMenu = (props: Props) => {
       Icon: <FmdGoodIcon />,
       page: "/saved-places",
     },
-    { Name: "Events", Icon: <EventAvailableIcon />, page: "/events" },
-    { Name: "Settings", Icon: <SettingsIcon />, page: "/settings" },
+    { Name: "Scenes", Icon: <EventAvailableIcon />, page: "/scenes" },
   ];
 
   const toggleDrawer =

@@ -52,8 +52,8 @@ function App() {
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="home" element={Layout(HomePage)} />
-          <Route path="events" element={Layout(EventsPage)} />
-          <Route path="events/:id" element={Layout(ChatPage)} />
+          <Route path="scenes" element={Layout(EventsPage)} />
+          <Route path="scenes/:id" element={Layout(ChatPage)} />
           <Route path="saved-places" element={Layout(PlacePage)} />
         </Route>
       </Routes>

@@ -7,8 +7,13 @@ const useRequest = () => {
   const { authState } = useAuthContext();
 
   const configAxiosInstance = (): AxiosInstance => {
-    const authToken =
-      authState && authState.token ? `Bearer ${authState.token}` : null;
+    let auth = authState;
+
+    if (authState && typeof authState === "string") {
+      auth = JSON.parse(authState);
+    }
+
+    const authToken = auth && auth.token ? `Bearer ${auth.token}` : null;
 
     return axios.create({
       baseURL: baseUrl,

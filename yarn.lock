@@ -7628,6 +7628,11 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
+maki@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/maki/-/maki-2.1.0.tgz#ef9f2b17508293102a7a8e4667d0d27cd89b55ce"
+  integrity sha512-rKat2M8wvyEPkzRvuFy2r0/gzC2+0QFtNTbenCryvPxyO8O/frMnuE1BmHcHiYQbMY9O69t1T+SrneiCtFzlaw==
+
 map-obj@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"

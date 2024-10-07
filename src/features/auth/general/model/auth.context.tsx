@@ -29,7 +29,7 @@ const AuthProvider: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const logout = () => {
     setAuthState(undefined);
     removeDataLocal("auth");
-    landsatToast("¡Hasta luego!", "success");
+    landsatToast("¡See you soon!", "success");
     navigate("/", { replace: true });
   };
 

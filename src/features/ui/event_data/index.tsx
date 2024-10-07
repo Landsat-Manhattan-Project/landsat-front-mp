@@ -61,6 +61,7 @@ const EventData = (props: Props) => {
   const getMetadata = async () => {
     try {
       setIsLoading(true);
+      console.log(baseUrl);
       const { data } = await axios.get(
         `${baseUrl}?latitude=${latitude}&longitude=${longitude}`
       );

@@ -1,5 +1,7 @@
 import {
+  Avatar,
   Box,
+  Divider,
   Drawer,
   IconButton,
   List,
@@ -12,7 +14,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
-import SettingsIcon from "@mui/icons-material/Settings";
 import CloseIcon from "@mui/icons-material/Close";
 import { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -64,13 +65,8 @@ const SideMenu = (props: Props) => {
       <List>
         {options
           .filter((el) => {
-            console.log(authState?.role);
-            console.log(
-              authState?.role === "guest" &&
-                routesBlockForGuest.includes(el.page)
-            );
             return !(
-              authState?.role === "guest" &&
+              authState?.userRolApp === "guest" &&
               routesBlockForGuest.includes(el.page)
             );
           })
@@ -134,8 +130,23 @@ const SideMenu = (props: Props) => {
               <CloseIcon />
             </IconButton>
           </Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              padding: "1rem",
+              boxSizing: "border-box",
+            }}
+          >
+            <Avatar
+              sx={{ width: 60, height: 60, bgcolor: "white", color: "black" }}
+            />
+          </Box>
+          <Divider sx={{ color: "white", bgcolor: "white", mt: 2, mb: 2 }} />
           <OptionsList />
         </Box>
+        <Divider sx={{ color: "white", bgcolor: "white" }} />
         <ListItem disablePadding>
           <ListItemButton
             sx={{ padding: "1rem", "&:hover": { backgroundColor: "#222" } }}

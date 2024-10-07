@@ -14,6 +14,7 @@ const Chat = (props: Props) => {
 
   const request = useRef<any>("");
   const { search } = useLocation();
+  console.log(search);
   const [messages, setMessages] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -23,8 +23,8 @@ const Place = () => {
           {places ? (
             places.map((place) => (
               <PlaceCard
-                key={place.id}
-                id={place.id}
+                key={place._id}
+                _id={place._id}
                 name={place.name}
                 latitude={place.latitude}
                 longitude={place.longitude}

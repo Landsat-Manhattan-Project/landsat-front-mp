@@ -36,8 +36,9 @@ const useRegister = (
     const result: Auth = {
       email: formData.email,
       token: token,
-      role: "user",
-      purpose: formData.appPurpose,
+      role: formData.role,
+      userRolApp: "user",
+      purpose: formData.purpose ?? "",
     };
 
     await zoomIn();
@@ -60,7 +61,8 @@ const useRegister = (
       async () => {
         const result = await axiosInstance.post("/auth/signup", {
           ...formData,
-          purpose: formData.appPurpose,
+          role: formData.role,
+          purpose: formData.purpose,
         });
 
         await registerSucessfully(result.data.token);

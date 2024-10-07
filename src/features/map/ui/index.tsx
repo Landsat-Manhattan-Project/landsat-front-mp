@@ -29,11 +29,22 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useAuthContext } from "../../auth/general/model/auth.context";
 
+import scene1 from "../../ui/event_data/images/B1_sabana.webp";
+import scene2 from "../../ui/event_data/images/B2_sabana.webp";
+import scene3 from "../../ui/event_data/images/B3_sabana.webp";
+import scene4 from "../../ui/event_data/images/B4_sabana.webp";
+import scene5 from "../../ui/event_data/images/B5_sabana.webp";
+import scene6 from "../../ui/event_data/images/B6_sabana.webp";
+import scene7 from "../../ui/event_data/images/B7_sabana.webp";
+import { images } from "../../../assets/images";
+
 const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN ?? "";
 
 const Map = () => {
   const mapRef = useRef<MP>(null!);
   const mapContainerRef = useRef<HTMLDivElement>(null!);
+
+  const scenes = [scene1, scene2, scene3, scene4, scene5, scene6, scene7];
 
   const location = useLocation();
   const state = location.state;
@@ -264,10 +275,10 @@ const Map = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
             bgcolor: "#000000",
             color: "white",
             border: "2px solid white",
+            width: "50vw",
             boxShadow: 24,
             borderRadius: 2,
             maxHeight: "80%",
@@ -313,13 +324,95 @@ const Map = () => {
               <CloseIcon />
             </IconButton>
           </Box>
-          <Divider sx={{ color: "white", bgcolor: "white", mb: 2 }} />
+          <Divider sx={{ color: "white", bgcolor: "white" }} />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              alignContent: "center",
+              mt: 1,
+              mb: 2,
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "bold", fontStyle: "italic" }}
+            >
+              Date:
+            </Typography>
+            <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+              {Intl.DateTimeFormat("en").format(new Date())}
+            </Typography>
+          </Box>
           {coordinatesInfo?.name && (
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              sx={{ fontWeight: "bold" }}
+            >
               {coordinatesInfo.name}
             </Typography>
           )}
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                alt={"scene"}
+                src={scenes[Math.floor(Math.random() * 6)]}
+                style={{ width: "200px", height: "200px" }}
+              />
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ fontWeight: "bold", textAlign: "center" }}
+              >
+                Scene
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                alt={"graph"}
+                src={images[Math.floor(Math.random() * 5)]}
+                style={{ width: "180px", height: "180px" }}
+              />
+              <Typography
+                id="modal-modal-title"
+                variant="h6"
+                component="h2"
+                sx={{ fontWeight: "bold", textAlign: "center" }}
+              >
+                {"SR data"}
+              </Typography>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -343,7 +436,14 @@ const Map = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -367,7 +467,14 @@ const Map = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -391,7 +498,14 @@ const Map = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -415,7 +529,14 @@ const Map = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -450,7 +571,14 @@ const Map = () => {
               {placeMetadata?.scene_id}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -474,7 +602,14 @@ const Map = () => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+              justifyContent: "space-between",
+            }}
+          >
             <Box sx={{ display: "flex", flexDirection: "row", gap: 1, mt: 2 }}>
               <Typography
                 id="modal-modal-description"
@@ -499,7 +634,7 @@ const Map = () => {
             </Box>
           </Box>
 
-          {authState?.role === "user" && (
+          {authState?.userRolApp === "user" && (
             <>
               {(coordinatesInfo?.name === null ||
                 coordinatesInfo?.name === undefined) && (
@@ -560,7 +695,7 @@ const Map = () => {
                     <Input
                       value={formData?.name}
                       onChange={(e) => {
-                        const toSave: Omit<Place, "id"> = {
+                        const toSave: Omit<Place, "_id"> = {
                           name: e.target.value,
                           latitude: coordinatesInfo?.lat ?? 0,
                           longitude: coordinatesInfo?.lng ?? 0,
@@ -582,7 +717,7 @@ const Map = () => {
                           sx={{ color: "white" }}
                           value={formData?.notify}
                           onChange={(_, checked) => {
-                            const toSave: Omit<Place, "id"> = {
+                            const toSave: Omit<Place, "_id"> = {
                               name: formData?.name ?? "",
                               latitude: coordinatesInfo?.lat ?? 0,
                               longitude: coordinatesInfo?.lng ?? 0,
@@ -604,7 +739,7 @@ const Map = () => {
                             label="Start notification time"
                             value={dayjs(formData.startNotificationTime)}
                             onChange={(newValue) => {
-                              const toSave: Omit<Place, "id"> = {
+                              const toSave: Omit<Place, "_id"> = {
                                 ...formData,
                                 latitude: coordinatesInfo?.lat ?? 0,
                                 longitude: coordinatesInfo?.lng ?? 0,
@@ -627,7 +762,7 @@ const Map = () => {
                                   )
                             }
                             onChange={(newValue) => {
-                              const toSave: Omit<Place, "id"> = {
+                              const toSave: Omit<Place, "_id"> = {
                                 ...formData,
                                 latitude: coordinatesInfo?.lat ?? 0,
                                 longitude: coordinatesInfo?.lng ?? 0,

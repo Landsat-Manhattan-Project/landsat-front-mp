@@ -15,7 +15,7 @@ const UseMap = (closeModal: () => void, closeForm: () => void) => {
   const [placeMetadata, setPlaceMetadata] = useState<Metadata>();
 
   const [isFormFailed, setIsFormFailed] = useState(false);
-  const [formData, setFormData] = useState<Omit<Place, "id">>();
+  const [formData, setFormData] = useState<Omit<Place, "_id">>();
   const [newPlaceSaved, setNewPlaceSaved] = useState(false);
 
   const getMetadata = async (lat: number, lng: number) => {
@@ -32,7 +32,7 @@ const UseMap = (closeModal: () => void, closeForm: () => void) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getAllPlaces = async () => {
-    if (authState?.role === "user") {
+    if (authState?.userRolApp === "user") {
       await handleErrors(async () => {
         const result = await axiosInstance.get("/coordinates");
 

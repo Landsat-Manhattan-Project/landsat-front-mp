@@ -9,20 +9,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Place } from "../../../entities/place";
 
-type Props = Place;
+interface Props extends Place {}
 
-const PlaceCard = ({ id, name, latitude, longitude, notify }: Props) => {
+const PlaceCard = (props: Props) => {
   const navigate = useNavigate();
 
   const redirectToHome = () => {
-    navigate("/home", {
-      state: {
-        id,
-        name,
-        latitude,
-        longitude,
-        notify,
-      },
+    navigate(`${props._id}`, {
+      state: props,
     });
   };
 
@@ -54,10 +48,12 @@ const PlaceCard = ({ id, name, latitude, longitude, notify }: Props) => {
         >
           <Box>
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-              {name}
+              {props.name}
             </Typography>
-            <Typography variant="body1">Latitude: {latitude}</Typography>
-            <Typography variant="body1">Longitude: {longitude}</Typography>
+            <Typography variant="body1">Latitude: {props.latitude}</Typography>
+            <Typography variant="body1">
+              Longitude: {props.longitude}
+            </Typography>
           </Box>
         </CardContent>
       </CardActionArea>

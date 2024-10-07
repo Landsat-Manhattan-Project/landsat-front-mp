@@ -7,7 +7,9 @@ import { useState } from "react";
 export interface IFormData {
   email: string;
   password: string;
-  appPurpose: string;
+  userRolApp?: "user" | "guest";
+  role?: string;
+  purpose?: string;
 }
 
 interface UseGeneralAuthProps {
@@ -26,10 +28,11 @@ const useGeneralAuth = (
   const { encryptData } = secret();
   const { setAuthState } = useAuthContext();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IFormData>({
     email: "",
     password: "",
-    appPurpose: "",
+    role: "",
+    purpose: "",
   });
 
   const loginWithoutSession = async () => {
@@ -41,7 +44,7 @@ const useGeneralAuth = (
       setTimeout(async () => {
         await zoomIn();
         setAuthState({
-          role: "guest",
+          userRolApp: "guest",
         });
 
         const encryptedData = encryptData(JSON.stringify({ role: "guest" }));

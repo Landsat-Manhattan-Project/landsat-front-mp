@@ -2,6 +2,7 @@ export interface Auth {
   email?: string;
   password?: string;
   token?: string;
-  role: "user" | "guest";
+  userRolApp?: "user" | "guest";
+  role?: string;
   purpose?: string;
 }

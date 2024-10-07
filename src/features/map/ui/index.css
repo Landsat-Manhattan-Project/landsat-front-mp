@@ -2,10 +2,6 @@
   color: white;
 }
 
-.css-gi59xn-MuiMultiSectionDigitalClock-root {
-  color: black;
-}
-
 /* Personalizar el contenedor del scrollbar */
 ::-webkit-scrollbar {
   width: 8px; /* Ancho del scrollbar vertical */

@@ -69,17 +69,27 @@ const Register = ({
           icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
           errorLabel={"Password is required"}
         />
+        <Input
+          value={formData.purpose}
+          onChange={(e) =>
+            setFormData({ ...formData, purpose: e.target.value })
+          }
+          error={formValidate && formData.purpose === ""}
+          isRequired
+          label={"What is your purpose?"}
+          type={"text"}
+          icon={<PasswordIcon sx={{ color: "white", mr: 1, my: 0.5 }} />}
+          errorLabel={"Purpose is required"}
+        />
         <TextField
           sx={{ width: "90%", color: "black", mt: 1 }}
           id="select"
-          label="What is your purpose?"
-          value={formData.appPurpose}
+          label="What is your occupation?"
+          value={formData.role}
           select
-          error={formValidate && formData.password === ""}
+          error={formValidate && formData.role === ""}
           required
-          onChange={(e) =>
-            setFormData({ ...formData, appPurpose: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
         >
           <MenuItem sx={{ color: "white" }} value="citizen">
             Citizen

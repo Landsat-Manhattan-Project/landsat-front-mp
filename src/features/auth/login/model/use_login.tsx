@@ -31,12 +31,14 @@ const useLogin = (
 
   const [formValidate, setFormValidate] = useState(false);
 
-  const loginSucessfully = async (token: string) => {
+  const loginSucessfully = async (data: any) => {
     landsatToast(`¡Welcome ${formData.email}!`, "success");
     const result: Auth = {
+      role: data.role,
+      purpose: data.purpose,
       email: formData.email,
-      token: token,
-      role: "user",
+      token: data.token,
+      userRolApp: "user",
     };
 
     await zoomIn();
@@ -61,8 +63,9 @@ const useLogin = (
     handleErrors(
       async () => {
         const result = await axiosInstance.post("/auth/login", formData);
+        console.log(result);
 
-        await loginSucessfully(result.data.token);
+        await loginSucessfully(result.data);
       },
       async (e) => {
         setTimeout(async () => {
